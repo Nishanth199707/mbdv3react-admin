@@ -1,0 +1,91 @@
+@import './variables.css';
+
+/* Mobile First Responsive Design */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .sm\:block { display: block; }
+  .sm\:hidden { display: none; }
+  .sm\:flex { display: flex; }
+  .sm\:grid { display: grid; }
+  
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  
+  .sm\:text-sm { font-size: var(--font-sm); }
+  .sm\:text-base { font-size: var(--font-base); }
+  .sm\:text-lg { font-size: var(--font-lg); }
+  
+  .sm\:p-4 { padding: var(--spacing-md); }
+  .sm\:p-6 { padding: var(--spacing-lg); }
+  .sm\:p-8 { padding: var(--spacing-xl); }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .md\:block { display: block; }
+  .md\:hidden { display: none; }
+  .md\:flex { display: flex; }
+  .md\:grid { display: grid; }
+  
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  
+  .md\:flex-row { flex-direction: row; }
+  .md\:justify-between { justify-content: space-between; }
+  
+  .md\:text-base { font-size: var(--font-base); }
+  .md\:text-lg { font-size: var(--font-lg); }
+  .md\:text-xl { font-size: var(--font-xl); }
+  .md\:text-2xl { font-size: var(--font-2xl); }
+  
+  .md\:p-6 { padding: var(--spacing-lg); }
+  .md\:p-8 { padding: var(--spacing-xl); }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .lg\:block { display: block; }
+  .lg\:hidden { display: none; }
+  .lg\:flex { display: flex; }
+  .lg\:grid { display: grid; }
+  
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lg\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  
+  .lg\:text-lg { font-size: var(--font-lg); }
+  .lg\:text-xl { font-size: var(--font-xl); }
+  .lg\:text-2xl { font-size: var(--font-2xl); }
+  .lg\:text-3xl { font-size: var(--font-3xl); }
+  
+  .lg\:p-8 { padding: var(--spacing-xl); }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .xl\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .xl\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .xl\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  
+  .xl\:text-xl { font-size: var(--font-xl); }
+  .xl\:text-2xl { font-size: var(--font-2xl); }
+  .xl\:text-3xl { font-size: var(--font-3xl); }
+  .xl\:text-4xl { font-size: var(--font-4xl); }
+}
+
+/* Mobile specific classes */
+@media (max-width: 767px) {
+  .mobile-hidden { display: none !important; }
+  .mobile-menu-button { display: block !important; }
+  
+  .mobile-text-center { text-align: center; }
+  .mobile-full-width { width: 100%; }
+  
+  .mobile-p-4 { padding: var(--spacing-md); }
+  .mobile-m-2 { margin: var(--spacing-sm); }
+  
+  .mobile-flex-col { flex-direction: column; }
+  .mobile-gap-2 { gap: var(--spacing-sm); }
+}

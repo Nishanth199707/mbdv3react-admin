@@ -1,0 +1,64 @@
+/* Layout.module.css */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevent flex overflow */
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.contentInner {
+  padding: 2rem;
+  max-width: 100%;
+}
+
+/* Desktop layout */
+@media (min-width: 769px) {
+  .container {
+    /* Sidebar will be positioned relative on desktop */
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .contentInner {
+    padding: 1rem;
+  }
+}
+
+/* Basic card styles for placeholder components */
+:global(.card) {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+:global(.card-body) {
+  padding: 1.5rem;
+}
+
+:global(.card-body h2) {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+:global(.card-body p) {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
+}

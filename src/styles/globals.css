@@ -1,0 +1,287 @@
+@import './variables.css';
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-gray);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Focus Styles */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--text-white);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+    /* Header adjustments */
+    .headerInner {
+      padding: 0 var(--spacing-sm);
+    }
+    
+    .searchBox {
+      max-width: 10rem;
+    }
+    
+    .searchInput {
+      font-size: var(--font-xs);
+    }
+    
+    /* Sidebar adjustments */
+    .sidebarMobile {
+      width: 16rem;
+    }
+    
+    /* Dashboard adjustments */
+    .welcomeCard {
+      padding: var(--spacing-md);
+    }
+    
+    .welcomeTitle {
+      font-size: var(--font-xl);
+    }
+    
+    .statsGrid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+    
+    .quickActionsGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Table adjustments */
+    .searchInput {
+      width: 100%;
+      max-width: none;
+    }
+    
+    .tableContainer {
+      font-size: var(--font-xs);
+    }
+    
+    .tableHeaderCell,
+    .tableCell {
+      padding: var(--spacing-sm);
+    }
+    
+    /* Company page adjustments */
+    .pageHeader {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-sm);
+    }
+    
+    .filtersInner {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .filtersLeft {
+      justify-content: center;
+    }
+    
+    .viewModeButtons {
+      justify-content: center;
+    }
+    
+    .gridView {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Login form adjustments */
+    .container {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
+    .form {
+      padding: var(--spacing-lg);
+    }
+    
+    .title {
+      font-size: var(--font-2xl);
+    }
+  }
+  
+  /* Tablet adjustments */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .statsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quickActionsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gridView {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Large desktop adjustments */
+  @media (min-width: 1200px) {
+    .contentInner,
+    .pageContent {
+      max-width: 90rem;
+    }
+    
+    .statsGrid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .quickActionsGrid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .gridView {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .sidebar,
+    .header,
+    .bellButton,
+    .menuButton,
+    .actionButton,
+    .addButton,
+    .filterButton,
+    .viewModeButtons {
+      display: none !important;
+    }
+    
+    .mainContent {
+      margin: 0;
+      box-shadow: none;
+    }
+    
+    .container {
+      display: block;
+    }
+    
+    .content {
+      overflow: visible;
+    }
+  }
+  
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    .card,
+    .statsCard,
+    .companyCard {
+      border-width: 2px;
+    }
+    
+    .btn {
+      border-width: 2px;
+    }
+    
+    .input {
+      border-width: 2px;
+    }
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .statsCard:hover,
+    .companyCard:hover,
+    .actionButton:hover {
+      transform: none;
+    }
+  }
+  
+  /* Dark mode support (if needed in future) */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-primary: #1f2937;
+      --bg-secondary: #374151;
+      --bg-tertiary: #4b5563;
+      --bg-gray: #111827;
+      --text-primary: #f9fafb;
+      --text-secondary: #d1d5db;
+      --text-tertiary: #9ca3af;
+      --text-muted: #6b7280;
+      --border-primary: #374151;
+      --border-secondary: #4b5563;
+    }
+  }

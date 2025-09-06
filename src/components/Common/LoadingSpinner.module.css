@@ -1,0 +1,28 @@
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+  }
+  
+  .spinnerCircle {
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid var(--border-primary);
+    border-top: 2px solid var(--color-primary);
+    border-radius: var(--radius-full);
+    animation: spin 1s linear infinite;
+  }
+  
+  .spinnerText {
+    margin-top: var(--spacing-md);
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: var(--font-sm);
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  

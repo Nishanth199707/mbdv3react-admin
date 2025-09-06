@@ -1,0 +1,84 @@
+.authContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-gray);
+    padding: var(--spacing-2xl) var(--spacing-md);
+  }
+  
+  .authCard {
+    width: 100%;
+    max-width: 28rem;
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+  }
+  
+  .authHeader {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-xl);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--text-white);
+  }
+  
+  .authIcon {
+    width: 4rem;
+    height: 4rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    backdrop-filter: blur(10px);
+  }
+  
+  .authTitle {
+    font-size: var(--font-3xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .authSubtitle {
+    font-size: var(--font-base);
+    opacity: 0.9;
+  }
+  
+  .authBody {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+  
+  .authFooter {
+    padding: 0 var(--spacing-lg) var(--spacing-2xl);
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+  }
+  
+  .switchButton {
+    color: var(--color-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-sm);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+  }
+  
+  .switchButton:hover {
+    color: var(--color-primary-dark);
+  }
+  
+  .loadingOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+  
