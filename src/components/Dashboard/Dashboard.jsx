@@ -149,7 +149,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className={styles.dashboard}>
+    <div className="p-2 bg-white">
       {/* Header Section */}
       {/* <div className={styles.dashboardHeader}>
         <div className={styles.headerContent}>

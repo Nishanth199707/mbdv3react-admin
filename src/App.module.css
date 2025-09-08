@@ -1,4 +1,4 @@
-.app {
+/* .app {
     width: 100%;
     min-height: 100vh;
     background-color: var(--bg-gray);
@@ -28,10 +28,10 @@
     max-width: 75rem;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-md);
-  }
+  } */
   
   /* Responsive Adjustments */
-  @media (max-width: 1023px) {
+  /* @media (max-width: 1023px) {
     .sidebar {
       position: fixed;
       top: 0;
@@ -67,4 +67,4 @@
     .searchBox {
       max-width: 12rem;
     }
-  }
+  } */

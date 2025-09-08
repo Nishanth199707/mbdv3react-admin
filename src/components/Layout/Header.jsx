@@ -10,8 +10,8 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContent}>
+    <div className="">
+      <div className="flex items-center justify-between h-15 p-2">
         <div className={styles.leftSection}>
           <button
             className={styles.menuButton}
@@ -26,7 +26,8 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
             </div>
           </button>
           
-          <h1 className={styles.pageTitle}>{activeMenuItem || 'Dashboard'}</h1>
+          {/* <h1 className={styles.pageTitle}>{activeMenuItem || 'Dashboard'}</h1> */}
+          {/* <h1 className='font-bold tex-lg'>MDB</h1> */}
         </div>
         
         <div className={styles.rightSection}>
@@ -35,7 +36,7 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 

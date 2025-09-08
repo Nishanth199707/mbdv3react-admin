@@ -201,7 +201,7 @@
 .searchIcon {
   position: absolute;
   left: 1rem;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
   color: #64748b;
   pointer-events: none;
