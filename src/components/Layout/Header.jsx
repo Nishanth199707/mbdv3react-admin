@@ -23,8 +23,8 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
   };
 
   return (
-    <div className="">
-      <div className="flex items-center justify-between h-15 p-2">
+    <div className="h-15">
+      <div className="flex items-center justify-between  p-2">
         <div className={styles.leftSection}>
           <button
             className={styles.menuButton}

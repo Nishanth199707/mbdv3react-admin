@@ -105,7 +105,7 @@ const MainLayout = () => {
         </div>
 
         {/* Main content with proper overflow handling */}
-        <div className="flex-1 overflow-y-auto bg-gray-300 p-4 mt-2">
+        <div className="flex-1 overflow-y-auto bg-gray-300 p-4">
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />

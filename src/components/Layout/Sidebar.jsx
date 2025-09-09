@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { LogOut, User, X } from "lucide-react";
 import styles from "./Sidebar.module.css";
 import { Menu } from "lucide-react";
+import logo from "../../assets/MDB-RED.png"
 
 const Sidebar = ({ isOpen, onClose, activeMenuItem, setSidebarOpen }) => {
   const navigate = useNavigate();
@@ -96,12 +97,13 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem, setSidebarOpen }) => {
     >
       <aside className="p-4">
         <div className={styles.sidebarHeader}>
-          <h2>MDB</h2>
+          <img src={logo} width={130}/>
+          
         </div>
 
         <button
           onClick={() => setSidebarOpen((s) => !s)}
-          className="fixed top-5 left-90  z-40 p-2 rounded bg-white shadow md:hidden"
+          className="fixed top-3 left-90  z-40 p-2 rounded bg-white shadow md:hidden"
           type="button"
           aria-label="Toggle sidebar"
         >
