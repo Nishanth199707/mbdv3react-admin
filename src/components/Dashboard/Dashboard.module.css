@@ -72,11 +72,11 @@
 
 /* Content Container */
 .dashboard > * {
-  max-width: 1200px;
+  /* max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
-  padding-right: 2rem;
+  padding-right: 2rem; */
 }
 
 .dashboard > .dashboardHeader {
@@ -199,14 +199,14 @@
 /* Stats Grid */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
 /* Quick Actions */
 .quickActionsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 

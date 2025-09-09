@@ -93,9 +93,9 @@ const MainLayout = () => {
       </div>
 
       {/* Main content area with left margin to account for sidebar */}
-      <div className="flex flex-col flex-1 ml-0 lg:ml-60 transition-all duration-300">
+      <div className="flex flex-col flex-1 ml-0 lg:ml-50 transition-all duration-300">
         {/* Sticky header */}
-        <div className="sticky top-0 z-20">
+        <div className="sticky top-0 z-20 ">
           <Header
             isOpen={sidebarOpen}
                  setSidebarOpen={setSidebarOpen}

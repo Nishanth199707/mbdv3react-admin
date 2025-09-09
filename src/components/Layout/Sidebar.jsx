@@ -90,8 +90,8 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem, setSidebarOpen }) => {
 
   return (
     <div
-      className={` md:p-0 fixed left-0 top-0 h-full md:w-0 z-50 bg-white text-black lg:w-60 xl:w-60 ${
-        !isOpen ? "w-0" : "w-60"
+      className={` md:p-0 fixed left-0 border-r top-0 h-full md:w-0 z-50 bg-white text-black lg:w-30 xl:w-50 ${
+        !isOpen ? "w-0" : "w-50"
       }`}
     >
       <aside className="p-4">
@@ -101,11 +101,11 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem, setSidebarOpen }) => {
 
         <button
           onClick={() => setSidebarOpen((s) => !s)}
-          className="fixed top-5 left-45 z-40 p-2 rounded bg-white shadow md:hidden"
+          className="fixed top-5 left-90  z-40 p-2 rounded bg-white shadow md:hidden"
           type="button"
           aria-label="Toggle sidebar"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
 
         <div className={styles.sidebarContent}>

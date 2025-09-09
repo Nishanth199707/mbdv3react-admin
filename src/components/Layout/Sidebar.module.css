@@ -75,11 +75,13 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
 }
 
 .nav {
   padding: 1rem 0;
   flex: 1;
+  
 }
 
 .navList {

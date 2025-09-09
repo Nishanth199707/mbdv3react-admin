@@ -12,6 +12,8 @@ import {
   X,
   Filter,
   Search,
+  IndianRupee,
+   PhoneCall
 } from "lucide-react";
 import { plansAPI } from "../../services/api";
 import LoadingSpinner from "../Common/LoadingSpinner";
@@ -67,10 +69,7 @@ const PlanCard = ({ plan, onEdit, onToggleStatus, onView }) => {
           <span>{plan.staff} Staff Members</span>
         </div>
         <div className={styles.featureItem}>
-          <DollarSign
-            className={styles.featureIcon}
-            style={{ color: "#8b5cf6" }}
-          />
+           <PhoneCall color="blue" className={styles.featureIcon} />
           <span>{plan.free_whatsapp_sms} Free WhatsApp SMS</span>
         </div>
         <div className={styles.featureItem}>

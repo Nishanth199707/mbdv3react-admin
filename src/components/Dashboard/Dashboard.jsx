@@ -167,7 +167,7 @@ const Dashboard = () => {
       </div> */}
 
       {/* Welcome Card */}
-      <div className={styles.welcomeCard}>
+      {/* <div className={styles.welcomeCard}>
         <div className={styles.welcomeContent}>
           <div className={styles.welcomeInfo}>
             <div className={styles.welcomeGreeting}>
@@ -195,19 +195,10 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Stats Grid */}
-      <div className={styles.statsSection}>
-        <h3 className={styles.sectionTitle}>Key Metrics</h3>
-        <div className={styles.statsGrid}>
-          {stats.map((stat, index) => (
-            <StatsCard key={index} {...stat} />
-          ))}
-        </div>
-      </div>
-
-      {/* Quick Actions */}
+          {/* Quick Actions */}
       <div className={styles.quickActionsSection}>
         <div className={styles.sectionHeader}>
           <h3 className={styles.sectionTitle}>Quick Actions</h3>
@@ -232,6 +223,16 @@ const Dashboard = () => {
         </div>
       </div>
 
+      <div className={styles.statsSection}>
+        <h3 className={styles.sectionTitle}>Key Metrics</h3>
+        <div className={styles.statsGrid}>
+          {stats.map((stat, index) => (
+            <StatsCard key={index} {...stat} />
+          ))}
+        </div>
+      </div>
+
+  
       {/* Companies Section */}
       <div className={styles.companiesSection}>
         <div className={styles.sectionHeader}>

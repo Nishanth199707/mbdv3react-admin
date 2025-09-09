@@ -1,7 +1,7 @@
 /* PlansPage.module.css */
 
 .container {
-    padding: 0;
+    padding: 8px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     /* min-height: 100vh;
     width: 100%; */
@@ -159,7 +159,7 @@
   /* Plans Grid */
   .plansGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
   }
