@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Header.module.css';
+import {useAuth} from "../../context/AuthContext"
 
 const Header = ({ onMenuClick, activeMenuItem }) => {
   const handleMenuClick = () => {
@@ -8,10 +9,22 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
       onMenuClick();
     }
   };
+    const { user } = useAuth();
+
+      const formatLoginTime = (loginTime) => {
+    if (!loginTime) return 'Unknown';
+    return new Date(loginTime).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContent}>
+    <div className="h-15">
+      <div className="flex items-center justify-between  p-2">
         <div className={styles.leftSection}>
           <button
             className={styles.menuButton}
@@ -26,16 +39,18 @@ const Header = ({ onMenuClick, activeMenuItem }) => {
             </div>
           </button>
           
-          <h1 className={styles.pageTitle}>{activeMenuItem || 'Dashboard'}</h1>
+          {/* <h1 className={styles.pageTitle}>{activeMenuItem || 'Dashboard'}</h1> */}
+          {/* <h1 className='font-bold tex-lg'>MDB</h1> */}
         </div>
         
-        <div className={styles.rightSection}>
+        <div className="flex items-center  invisible  md:visible ">
           <div className={styles.userSection}>
-            <span>👤 User</span>
+            <span>👤{user?.name || "Super Admin"}</span><br/>
+              <span>Last login: {formatLoginTime(user?.loginTime)}</span>
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 

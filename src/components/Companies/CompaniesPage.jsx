@@ -189,7 +189,7 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="p-2 bg-white rounded-xl">
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerContent}>

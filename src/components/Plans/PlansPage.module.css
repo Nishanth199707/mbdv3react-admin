@@ -1,10 +1,10 @@
 /* PlansPage.module.css */
 
 .container {
-    padding: 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    min-height: 100vh;
-    width: 100%;
+    /* padding: 8px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); */
+    /* min-height: 100vh;
+    width: 100%; */
   }
   
   /* Header Section */
@@ -19,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
     gap: 1rem;
   }
@@ -46,11 +46,11 @@
   
   /* Content Container */
   .container > *:not(.header) {
-    max-width: 1200px;
+    /* max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 2rem;
-    padding-right: 2rem;
+    padding-right: 2rem; */
   }
   
   /* Buttons */
@@ -159,7 +159,7 @@
   /* Plans Grid */
   .plansGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
   }

@@ -32,7 +32,7 @@ const CompanyList = ({ companies }) => {
           </h3>
           <div className={styles.searchContainer}>
             <div className={styles.searchIconWrapper}>
-              <Search className={styles.searchIcon} />
+              {/* <Search className={styles.searchIcon} /> */}
             </div>
             <input
               type="text"

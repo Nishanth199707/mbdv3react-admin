@@ -1,19 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Eye, ToggleLeft, ToggleRight, DollarSign, Users, Calendar, Check, X, Filter, Search } from 'lucide-react';
-import { plansAPI } from '../../services/api';
-import LoadingSpinner from '../Common/LoadingSpinner';
-import ErrorMessage from '../Common/ErrorMessage';
-import styles from './PlansPage.module.css';
+import React, { useState, useEffect } from "react";
+import {
+  Plus,
+  Edit,
+  Eye,
+  ToggleLeft,
+  ToggleRight,
+  DollarSign,
+  Users,
+  Calendar,
+  Check,
+  X,
+  Filter,
+  Search,
+  IndianRupee,
+   PhoneCall
+} from "lucide-react";
+import { plansAPI } from "../../services/api";
+import LoadingSpinner from "../Common/LoadingSpinner";
+import ErrorMessage from "../Common/ErrorMessage";
+import styles from "./PlansPage.module.css";
 
 const PlanCard = ({ plan, onEdit, onToggleStatus, onView }) => {
   const isActive = plan.is_active;
-  
+
   return (
-    <div className={`${styles.planCard} ${isActive ? styles.planCardActive : styles.planCardInactive}`}>
+    <div
+      className={`${styles.planCard} ${
+        isActive ? styles.planCardActive : styles.planCardInactive
+      }`}
+    >
       {/* Status Badge */}
       <div className={styles.statusBadge}>
-        <span className={`${styles.statusLabel} ${isActive ? styles.statusActive : styles.statusInactive}`}>
-          {isActive ? 'Active' : 'Inactive'}
+        <span
+          className={`${styles.statusLabel} ${
+            isActive ? styles.statusActive : styles.statusInactive
+          }`}
+        >
+          {isActive ? "Active" : "Inactive"}
         </span>
       </div>
 
@@ -35,22 +58,28 @@ const PlanCard = ({ plan, onEdit, onToggleStatus, onView }) => {
       {/* Key Features */}
       <div className={styles.featuresSection}>
         <div className={styles.featureItem}>
-          <Users className={styles.featureIcon} style={{ color: '#3b82f6' }} />
-          <span>{plan.manage_business} Business{plan.manage_business > 1 ? 'es' : ''}</span>
+          <Users className={styles.featureIcon} style={{ color: "#3b82f6" }} />
+          <span>
+            {plan.manage_business} Business
+            {plan.manage_business > 1 ? "es" : ""}
+          </span>
         </div>
         <div className={styles.featureItem}>
-          <Users className={styles.featureIcon} style={{ color: '#10b981' }} />
+          <Users className={styles.featureIcon} style={{ color: "#10b981" }} />
           <span>{plan.staff} Staff Members</span>
         </div>
         <div className={styles.featureItem}>
-          <DollarSign className={styles.featureIcon} style={{ color: '#8b5cf6' }} />
+           <PhoneCall color="blue" className={styles.featureIcon} />
           <span>{plan.free_whatsapp_sms} Free WhatsApp SMS</span>
         </div>
         <div className={styles.featureItem}>
           {plan.ca_access ? (
-            <Check className={styles.featureIcon} style={{ color: '#10b981' }} />
+            <Check
+              className={styles.featureIcon}
+              style={{ color: "#10b981" }}
+            />
           ) : (
-            <X className={styles.featureIcon} style={{ color: '#ef4444' }} />
+            <X className={styles.featureIcon} style={{ color: "#ef4444" }} />
           )}
           <span>CA Access</span>
         </div>
@@ -74,10 +103,19 @@ const PlanCard = ({ plan, onEdit, onToggleStatus, onView }) => {
         </button>
         <button
           onClick={() => onToggleStatus(plan)}
-          className={`${styles.actionButton} ${isActive ? styles.actionButtonDeactivate : styles.actionButtonActivate}`}
-          title={isActive ? 'Deactivate Plan' : 'Activate Plan'}
+          className={`${styles.actionButton} ${
+            isActive
+              ? styles.actionButtonActivate
+              : styles.actionButtonDeactivate
+              
+          }`}
+          title={isActive ? "Deactivate Plan" : "Activate Plan"}
         >
-          {isActive ? <ToggleRight className={styles.actionIcon} /> : <ToggleLeft className={styles.actionIcon} />}
+          {isActive ? (
+            <ToggleRight className={styles.actionIcon} />
+          ) : (
+            <ToggleLeft className={styles.actionIcon} />
+          )}
         </button>
       </div>
     </div>
@@ -88,31 +126,31 @@ const PlanModal = ({ plan, isOpen, onClose, title }) => {
   if (!isOpen || !plan) return null;
 
   const features = [
-    { label: 'Manage Business', value: plan.manage_business },
-    { label: 'Branches', value: plan.branch },
-    { label: 'Access Users', value: plan.access_users },
-    { label: 'Access On', value: plan.access_on },
-    { label: 'Staff', value: plan.staff },
-    { label: 'Godowns', value: plan.godowns },
-    { label: 'E-way Bills', value: plan.eway_bills },
-    { label: 'Free WhatsApp SMS', value: plan.free_whatsapp_sms },
+    { label: "Manage Business", value: plan.manage_business },
+    { label: "Branches", value: plan.branch },
+    { label: "Access Users", value: plan.access_users },
+    { label: "Access On", value: plan.access_on },
+    { label: "Staff", value: plan.staff },
+    { label: "Godowns", value: plan.godowns },
+    { label: "E-way Bills", value: plan.eway_bills },
+    { label: "Free WhatsApp SMS", value: plan.free_whatsapp_sms },
   ];
 
   const booleanFeatures = [
-    { label: 'Multiple Invoice Themes', value: plan.multiple_invoice_themes },
-    { label: 'Print Barcodes', value: plan.print_barcodes },
-    { label: 'Own Online Store', value: plan.own_online_store },
-    { label: 'CA Access', value: plan.ca_access },
-    { label: 'Desktop App', value: plan.desktop_app },
-    { label: 'Generate E-invoices', value: plan.generate_einvoices },
-    { label: 'POS Billing', value: plan.pos_billing },
-    { label: 'User Activity Tracker', value: plan.user_activity_tracker },
-    { label: 'Automated Billing', value: plan.automated_billing },
-    { label: 'Bulk Download Print', value: plan.bulk_download_print },
-    { label: 'Referral Bonus', value: plan.referral_bonus },
-    { label: 'Update Bulk Item', value: plan.update_bulk_item },
-    { label: 'Party Credit Limit', value: plan.party_credit_limit },
-    { label: 'Payment Notification', value: plan.payment_notification },
+    { label: "Multiple Invoice Themes", value: plan.multiple_invoice_themes },
+    { label: "Print Barcodes", value: plan.print_barcodes },
+    { label: "Own Online Store", value: plan.own_online_store },
+    { label: "CA Access", value: plan.ca_access },
+    { label: "Desktop App", value: plan.desktop_app },
+    { label: "Generate E-invoices", value: plan.generate_einvoices },
+    { label: "POS Billing", value: plan.pos_billing },
+    { label: "User Activity Tracker", value: plan.user_activity_tracker },
+    { label: "Automated Billing", value: plan.automated_billing },
+    { label: "Bulk Download Print", value: plan.bulk_download_print },
+    { label: "Referral Bonus", value: plan.referral_bonus },
+    { label: "Update Bulk Item", value: plan.update_bulk_item },
+    { label: "Party Credit Limit", value: plan.party_credit_limit },
+    { label: "Payment Notification", value: plan.payment_notification },
   ];
 
   return (
@@ -126,25 +164,33 @@ const PlanModal = ({ plan, isOpen, onClose, title }) => {
             <X className={styles.modalCloseIcon} />
           </button>
         </div>
-        
+
         <div className={styles.modalBody}>
           {/* Basic Info */}
           <div className={styles.planInfoSection}>
             <h3 className={styles.planModalTitle}>{plan.name}</h3>
             <p className={styles.planModalDescription}>{plan.description}</p>
-            
+
             <div className={styles.pricingGrid}>
               <div className={styles.pricingCard}>
                 <p className={styles.pricingLabel}>Offer Price</p>
-                <p className={styles.pricingValue} style={{ color: '#3b82f6' }}>₹{plan.offer_price}</p>
+                <p className={styles.pricingValue} style={{ color: "#3b82f6" }}>
+                  ₹{plan.offer_price}
+                </p>
               </div>
               <div className={styles.pricingCard}>
                 <p className={styles.pricingLabel}>Sale Price</p>
-                <p className={`${styles.pricingValue} ${styles.pricingStrikethrough}`}>₹{plan.sale_price}</p>
+                <p
+                  className={`${styles.pricingValue} ${styles.pricingStrikethrough}`}
+                >
+                  ₹{plan.sale_price}
+                </p>
               </div>
               <div className={styles.pricingCard}>
                 <p className={styles.pricingLabel}>Duration</p>
-                <p className={styles.pricingValue} style={{ color: '#10b981' }}>{plan.no_of_days} days</p>
+                <p className={styles.pricingValue} style={{ color: "#10b981" }}>
+                  {plan.no_of_days} days
+                </p>
               </div>
             </div>
           </div>
@@ -162,7 +208,7 @@ const PlanModal = ({ plan, isOpen, onClose, title }) => {
                 ))}
               </div>
             </div>
-            
+
             <div className={styles.featuresColumn}>
               <h4 className={styles.featuresTitle}>Features</h4>
               <div className={styles.featuresList}>
@@ -185,21 +231,29 @@ const PlanModal = ({ plan, isOpen, onClose, title }) => {
   );
 };
 
-const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
+const CreatePlanModal = ({
+  isOpen,
+  onClose,
+  onSave,
+  editId,
+  setEditId,
+  setCreateModalOpen,
+  fetchPlans
+}) => {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    offer_price: '',
-    sale_price: '',
-    no_of_days: '',
-    manage_business: '',
-    branch: '',
-    access_users: '',
-    access_on: '',
-    staff: '',
-    godowns: '',
-    eway_bills: '',
-    free_whatsapp_sms: '',
+    name: "",
+    description: "",
+    offer_price: "",
+    sale_price: "",
+    no_of_days: "",
+    manage_business: "",
+    branch: "",
+    access_users: "",
+    access_on: "",
+    staff: "",
+    godowns: "",
+    eway_bills: "",
+    free_whatsapp_sms: "",
     multiple_invoice_themes: false,
     print_barcodes: false,
     own_online_store: false,
@@ -214,59 +268,150 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
     update_bulk_item: false,
     party_credit_limit: false,
     payment_notification: false,
-    is_active: true
+    is_active: true,
   });
-
+  const [get, setGet] = useState();
   const [saving, setSaving] = useState(false);
+  console.log(editId);
+  console.log(get, "gett");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!editId) return;
+      if (editId) {
+        try {
+          const res = await plansAPI.getById(editId);
+          setGet(res?.data?.data);
+
+          const plan = res?.data?.data;
+          setFormData({
+            name: plan.name,
+            description: plan.description,
+            offer_price: plan.offer_price,
+            sale_price: plan.sale_price,
+            no_of_days: plan.no_of_days,
+            manage_business: plan.manage_business,
+            branch: plan.branch,
+            access_users: plan.access_users,
+            access_on: plan.access_on,
+            staff: plan.staff,
+            godowns: plan.godowns,
+            eway_bills: plan.eway_bills,
+            free_whatsapp_sms: plan.free_whatsapp_sms,
+            multiple_invoice_themes: plan.multiple_invoice_themes,
+            print_barcodes: plan.print_barcodes,
+            own_online_store: plan.own_online_store,
+            ca_access: plan.ca_access,
+            desktop_app: plan.desktop_app,
+            generate_einvoices: plan.generate_einvoices,
+            pos_billing: plan.pos_billing,
+            user_activity_tracker: plan.user_activity_tracker,
+            automated_billing: plan.automated_billing,
+            bulk_download_print: plan.bulk_download_print,
+            referral_bonus: plan.referral_bonus,
+            update_bulk_item: plan.update_bulk_item,
+            party_credit_limit: plan.party_credit_limit,
+            payment_notification: plan.payment_notification,
+            is_active: plan.is_active,
+          });
+          setCreateModalOpen(true);
+        } catch (err) {
+          console.error("Error fetching plan by ID:", err);
+        } 
+      }
+    };
+
+    fetchData();
+  }, [editId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    
+
     try {
-      await onSave(formData);
-      setFormData({
-        name: '',
-        description: '',
-        offer_price: '',
-        sale_price: '',
-        no_of_days: '',
-        manage_business: '',
-        branch: '',
-        access_users: '',
-        access_on: '',
-        staff: '',
-        godowns: '',
-        eway_bills: '',
-        free_whatsapp_sms: '',
-        multiple_invoice_themes: false,
-        print_barcodes: false,
-        own_online_store: false,
-        ca_access: false,
-        desktop_app: false,
-        generate_einvoices: false,
-        pos_billing: false,
-        user_activity_tracker: false,
-        automated_billing: false,
-        bulk_download_print: false,
-        referral_bonus: false,
-        update_bulk_item: false,
-        party_credit_limit: false,
-        payment_notification: false,
-        is_active: true
-      });
-      onClose();
+      if (editId) {
+        await plansAPI.update(editId,formData);
+        setFormData({
+          name: "",
+          description: "",
+          offer_price: "",
+          sale_price: "",
+          no_of_days: "",
+          manage_business: "",
+          branch: "",
+          access_users: "",
+          access_on: "",
+          staff: "",
+          godowns: "",
+          eway_bills: "",
+          free_whatsapp_sms: "",
+          multiple_invoice_themes: false,
+          print_barcodes: false,
+          own_online_store: false,
+          ca_access: false,
+          desktop_app: false,
+          generate_einvoices: false,
+          pos_billing: false,
+          user_activity_tracker: false,
+          automated_billing: false,
+          bulk_download_print: false,
+          referral_bonus: false,
+          update_bulk_item: false,
+          party_credit_limit: false,
+          payment_notification: false,
+          is_active: true,
+        });
+        await plansAPI.getAll()
+        fetchPlans()
+        onClose();
+      } else {
+        await plansAPI.create(formData);
+        setFormData({
+          name: "",
+          description: "",
+          offer_price: "",
+          sale_price: "",
+          no_of_days: "",
+          manage_business: "",
+          branch: "",
+          access_users: "",
+          access_on: "",
+          staff: "",
+          godowns: "",
+          eway_bills: "",
+          free_whatsapp_sms: "",
+          multiple_invoice_themes: false,
+          print_barcodes: false,
+          own_online_store: false,
+          ca_access: false,
+          desktop_app: false,
+          generate_einvoices: false,
+          pos_billing: false,
+          user_activity_tracker: false,
+          automated_billing: false,
+          bulk_download_print: false,
+          referral_bonus: false,
+          update_bulk_item: false,
+          party_credit_limit: false,
+          payment_notification: false,
+          is_active: true,
+        });
+        await plansAPI.getAll()
+        fetchPlans()
+        onClose();
+      }
     } catch (error) {
-      console.error('Error saving plan:', error);
+      console.error("Error saving plan:", error);
     } finally {
       setSaving(false);
+      setEditId(null)
     }
   };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -281,7 +426,7 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
             <X className={styles.modalCloseIcon} />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className={styles.createModalBody}>
           {/* Basic Information */}
           <div className={styles.formSection}>
@@ -291,9 +436,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <label className={styles.formLabel}>Plan Name *</label>
                 <input
                   type="text"
-                  required
+                  // required
                   value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
                   className={styles.formInput}
                   placeholder="Enter plan name"
                 />
@@ -302,7 +447,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <label className={styles.formLabel}>Description</label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
                   className={styles.formTextarea}
                   placeholder="Enter plan description"
                   rows={3}
@@ -321,7 +468,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                   type="number"
                   required
                   value={formData.offer_price}
-                  onChange={(e) => handleInputChange('offer_price', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("offer_price", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="0"
                 />
@@ -332,7 +481,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                   type="number"
                   required
                   value={formData.sale_price}
-                  onChange={(e) => handleInputChange('sale_price', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("sale_price", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="0"
                 />
@@ -343,7 +494,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                   type="number"
                   required
                   value={formData.no_of_days}
-                  onChange={(e) => handleInputChange('no_of_days', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("no_of_days", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="30"
                 />
@@ -360,7 +513,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.manage_business}
-                  onChange={(e) => handleInputChange('manage_business', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("manage_business", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="1"
                 />
@@ -370,7 +525,7 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.branch}
-                  onChange={(e) => handleInputChange('branch', e.target.value)}
+                  onChange={(e) => handleInputChange("branch", e.target.value)}
                   className={styles.formInput}
                   placeholder="1"
                 />
@@ -380,7 +535,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.access_users}
-                  onChange={(e) => handleInputChange('access_users', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("access_users", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="5"
                 />
@@ -390,7 +547,7 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.staff}
-                  onChange={(e) => handleInputChange('staff', e.target.value)}
+                  onChange={(e) => handleInputChange("staff", e.target.value)}
                   className={styles.formInput}
                   placeholder="10"
                 />
@@ -400,7 +557,7 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.godowns}
-                  onChange={(e) => handleInputChange('godowns', e.target.value)}
+                  onChange={(e) => handleInputChange("godowns", e.target.value)}
                   className={styles.formInput}
                   placeholder="1"
                 />
@@ -410,7 +567,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.eway_bills}
-                  onChange={(e) => handleInputChange('eway_bills', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("eway_bills", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="100"
                 />
@@ -420,7 +579,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="number"
                   value={formData.free_whatsapp_sms}
-                  onChange={(e) => handleInputChange('free_whatsapp_sms', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("free_whatsapp_sms", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="100"
                 />
@@ -430,7 +591,9 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
                 <input
                   type="text"
                   value={formData.access_on}
-                  onChange={(e) => handleInputChange('access_on', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("access_on", e.target.value)
+                  }
                   className={styles.formInput}
                   placeholder="Web, Mobile"
                 />
@@ -443,27 +606,35 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
             <h3 className={styles.formSectionTitle}>Features</h3>
             <div className={styles.checkboxGrid}>
               {[
-                { key: 'multiple_invoice_themes', label: 'Multiple Invoice Themes' },
-                { key: 'print_barcodes', label: 'Print Barcodes' },
-                { key: 'own_online_store', label: 'Own Online Store' },
-                { key: 'ca_access', label: 'CA Access' },
-                { key: 'desktop_app', label: 'Desktop App' },
-                { key: 'generate_einvoices', label: 'Generate E-invoices' },
-                { key: 'pos_billing', label: 'POS Billing' },
-                { key: 'user_activity_tracker', label: 'User Activity Tracker' },
-                { key: 'automated_billing', label: 'Automated Billing' },
-                { key: 'bulk_download_print', label: 'Bulk Download Print' },
-                { key: 'referral_bonus', label: 'Referral Bonus' },
-                { key: 'update_bulk_item', label: 'Update Bulk Item' },
-                { key: 'party_credit_limit', label: 'Party Credit Limit' },
-                { key: 'payment_notification', label: 'Payment Notification' },
+                {
+                  key: "multiple_invoice_themes",
+                  label: "Multiple Invoice Themes",
+                },
+                { key: "print_barcodes", label: "Print Barcodes" },
+                { key: "own_online_store", label: "Own Online Store" },
+                { key: "ca_access", label: "CA Access" },
+                { key: "desktop_app", label: "Desktop App" },
+                { key: "generate_einvoices", label: "Generate E-invoices" },
+                { key: "pos_billing", label: "POS Billing" },
+                {
+                  key: "user_activity_tracker",
+                  label: "User Activity Tracker",
+                },
+                { key: "automated_billing", label: "Automated Billing" },
+                { key: "bulk_download_print", label: "Bulk Download Print" },
+                { key: "referral_bonus", label: "Referral Bonus" },
+                { key: "update_bulk_item", label: "Update Bulk Item" },
+                { key: "party_credit_limit", label: "Party Credit Limit" },
+                { key: "payment_notification", label: "Payment Notification" },
               ].map((feature) => (
                 <div key={feature.key} className={styles.checkboxField}>
                   <label className={styles.checkboxLabel}>
                     <input
                       type="checkbox"
                       checked={formData[feature.key]}
-                      onChange={(e) => handleInputChange(feature.key, e.target.checked)}
+                      onChange={(e) =>
+                        handleInputChange(feature.key, e.target.checked)
+                      }
                       className={styles.checkbox}
                     />
                     <span className={styles.checkboxText}>{feature.label}</span>
@@ -487,7 +658,7 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
               disabled={saving}
               className={`${styles.formButton} ${styles.formButtonPrimary}`}
             >
-              {saving ? 'Creating...' : 'Create Plan'}
+              {editId ? "update" : "Create Plan"}
             </button>
           </div>
         </form>
@@ -499,13 +670,13 @@ const CreatePlanModal = ({ isOpen, onClose, onSave }) => {
 const PlansPage = () => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all');
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [editId, setEditId] = useState(null);
   useEffect(() => {
     fetchPlans();
   }, []);
@@ -513,10 +684,10 @@ const PlansPage = () => {
   const fetchPlans = async () => {
     setLoading(true);
     const result = await plansAPI.getAll();
-    
+
     if (result.success) {
-      setPlans(result.data.data || []);
-      setError('');
+      setPlans(result?.data?.data || []);
+      setError("");
     } else {
       setError(result.error);
       // Mock data for development
@@ -533,7 +704,7 @@ const PlansPage = () => {
           staff: 5,
           free_whatsapp_sms: 100,
           ca_access: false,
-          is_active: true
+          is_active: true,
         },
         {
           id: 2,
@@ -547,8 +718,8 @@ const PlansPage = () => {
           staff: 15,
           free_whatsapp_sms: 500,
           ca_access: true,
-          is_active: true
-        }
+          is_active: true,
+        },
       ]);
     }
     setLoading(false);
@@ -556,13 +727,15 @@ const PlansPage = () => {
 
   const handleToggleStatus = async (plan) => {
     const result = await plansAPI.toggleStatus(plan.id);
-    
+
     if (result.success) {
-      setPlans(plans.map(p => 
-        p.id === plan.id ? { ...p, is_active: !p.is_active } : p
-      ));
+      setPlans(
+        plans.map((p) =>
+          p.id === plan.id ? { ...p, is_active: !p.is_active } : p
+        )
+      );
     } else {
-      alert('Failed to toggle plan status: ' + result.error);
+      alert("Failed to toggle plan status: " + result.error);
     }
   };
 
@@ -580,12 +753,14 @@ const PlansPage = () => {
     setPlans([...plans, newPlan]);
   };
 
-  const filteredPlans = plans.filter(plan => {
-    const matchesSearch = plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         plan.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filterStatus === 'all' || 
-                         (filterStatus === 'active' && plan.is_active) ||
-                         (filterStatus === 'inactive' && !plan.is_active);
+  const filteredPlans = plans.filter((plan) => {
+    const matchesSearch =
+      plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      plan.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter =
+      filterStatus === "all" ||
+      (filterStatus === "active" && plan.is_active) ||
+      (filterStatus === "inactive" && !plan.is_active);
     return matchesSearch && matchesFilter;
   });
 
@@ -604,17 +779,19 @@ const PlansPage = () => {
       </div>
     );
   }
-
+  console.log(editId, "edit");
   return (
-    <div className={styles.container}>
+    <div className={"p-2 bg-white rounded-xl"}>
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.headerText}>
             <h1 className={styles.title}>Plans Management</h1>
-            <p className={styles.subtitle}>Manage subscription plans and pricing ({plans.length} total)</p>
+            <p className={styles.subtitle}>
+              Manage subscription plans and pricing ({plans.length} total)
+            </p>
           </div>
-          <button 
+          <button
             onClick={() => setCreateModalOpen(true)}
             className={`${styles.button} ${styles.buttonPrimary}`}
           >
@@ -636,7 +813,7 @@ const PlansPage = () => {
             className={styles.searchInput}
           />
         </div>
-        
+
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
@@ -651,7 +828,9 @@ const PlansPage = () => {
       {/* Results Summary */}
       {plans.length > 0 && (
         <div className={styles.resultsSummary}>
-          <span>Showing {filteredPlans.length} of {plans.length} plans</span>
+          <span>
+            Showing {filteredPlans.length} of {plans.length} plans
+          </span>
         </div>
       )}
 
@@ -662,7 +841,10 @@ const PlansPage = () => {
             key={plan.id}
             plan={plan}
             onView={handleViewPlan}
-            onEdit={(plan) => console.log('Edit plan:', plan)}
+            onEdit={(plan) => {
+              console.log("Edit plan:", plan);
+              setEditId(plan.id);
+            }}
             onToggleStatus={handleToggleStatus}
           />
         ))}
@@ -671,7 +853,7 @@ const PlansPage = () => {
       {filteredPlans.length === 0 && (
         <div className={styles.emptyState}>
           <div className={styles.emptyStateContent}>
-            {searchTerm || filterStatus !== 'all' ? (
+            {searchTerm || filterStatus !== "all" ? (
               <>
                 <Search className={styles.emptyStateIcon} />
                 <h3 className={styles.emptyStateTitle}>No plans found</h3>
@@ -703,6 +885,10 @@ const PlansPage = () => {
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
         onSave={handleCreatePlan}
+        editId={editId}
+        setEditId={setEditId}
+        setCreateModalOpen={setCreateModalOpen}
+        fetchPlans={fetchPlans}
       />
     </div>
   );

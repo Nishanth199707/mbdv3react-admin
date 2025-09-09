@@ -1,47 +1,55 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { LogOut, User } from 'lucide-react';
-import styles from './Sidebar.module.css';
+import React, { useCallback, useMemo, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { LogOut, User, X } from "lucide-react";
+import styles from "./Sidebar.module.css";
+import { Menu } from "lucide-react";
+import logo from "../../assets/MDB-RED.png"
 
-const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
+const Sidebar = ({ isOpen, onClose, activeMenuItem, setSidebarOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Memoize menu items to prevent recreation on every render
-  const menuItems = useMemo(() => [
-    { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'Companies', path: '/companies', icon: '🏢' },
-    { name: 'Plans', path: '/plans', icon: '📋' },
-    { name: 'Users', path: '/users', icon: '👥' },
-    { name: 'Analytics', path: '/analytics', icon: '📈' },
-    { name: 'Settings', path: '/settings', icon: '⚙️' }
-  ], []);
+  const menuItems = useMemo(
+    () => [
+      { name: "Dashboard", path: "/dashboard", icon: "📊" },
+      { name: "Companies", path: "/companies", icon: "🏢" },
+      { name: "Plans", path: "/plans", icon: "📋" },
+      { name: "Users", path: "/users", icon: "👥" },
+      { name: "Analytics", path: "/analytics", icon: "📈" },
+      { name: "Settings", path: "/settings", icon: "⚙️" },
+    ],
+    []
+  );
 
   // Navigation handler
-  const handleMenuClick = useCallback((item) => {
-    console.log('Menu click:', item.name, item.path);
-    
-    // Navigate to the new route
-    navigate(item.path);
-    
-    // Close sidebar after navigation
-    if (onClose) {
-      onClose();
-    }
-  }, [navigate, onClose]);
+  const handleMenuClick = useCallback(
+    (item) => {
+      console.log("Menu click:", item.name, item.path);
+
+      // Navigate to the new route
+      navigate(item.path);
+
+      // Close sidebar after navigation
+      if (onClose) {
+        onClose();
+      }
+    },
+    [navigate, onClose]
+  );
 
   // Handle logout
   const handleLogout = useCallback(async () => {
     if (isLoggingOut) return;
-    
-    const confirmLogout = window.confirm('Are you sure you want to log out?');
+
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (!confirmLogout) return;
-    
+
     setIsLoggingOut(true);
-    
+
     try {
       await logout();
       // Close sidebar after logout
@@ -49,10 +57,10 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
         onClose();
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
       // Fallback logout
       localStorage.clear();
-      window.location.href = '/login';
+      window.location.href = "/login";
     } finally {
       setIsLoggingOut(false);
     }
@@ -60,7 +68,7 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
 
   // Handle overlay click
   const handleOverlayClick = useCallback(() => {
-    console.log('Overlay clicked, closing sidebar');
+    console.log("Overlay clicked, closing sidebar");
     if (onClose) {
       onClose();
     }
@@ -68,38 +76,40 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
 
   // Handle close button click
   const handleCloseClick = useCallback(() => {
-    console.log('Close button clicked');
+    console.log("Close button clicked");
     if (onClose) {
       onClose();
     }
   }, [onClose]);
 
-  console.log('Sidebar render - isOpen:', isOpen, 'activeMenuItem:', activeMenuItem);
+  console.log(
+    "Sidebar render - isOpen:",
+    isOpen,
+    "activeMenuItem:",
+    activeMenuItem
+  );
 
   return (
-    <>
-      {/* Overlay for mobile */}
-      {isOpen && (
-        <div 
-          className={styles.overlay} 
-          onClick={handleOverlayClick}
-        />
-      )}
-      
-      <aside 
-        className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
-      >
+    <div
+      className={` md:p-0 fixed left-0 border-r top-0 h-full md:w-0 z-50 bg-white text-black lg:w-30 xl:w-50 ${
+        !isOpen ? "w-0" : "w-50"
+      }`}
+    >
+      <aside className="p-4">
         <div className={styles.sidebarHeader}>
-          <h2>Your App</h2>
-          <button 
-            className={styles.closeBtn} 
-            onClick={handleCloseClick}
-            type="button"
-          >
-            ×
-          </button>
+          <img src={logo} width={130}/>
+          
         </div>
-        
+
+        <button
+          onClick={() => setSidebarOpen((s) => !s)}
+          className="fixed top-3 left-90  z-40 p-2 rounded bg-white shadow md:hidden"
+          type="button"
+          aria-label="Toggle sidebar"
+        >
+          {isOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+
         <div className={styles.sidebarContent}>
           <nav className={styles.nav}>
             <ul className={styles.navList}>
@@ -107,15 +117,13 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
                 <li key={item.name} className={styles.navItem}>
                   <button
                     className={`${styles.navLink} ${
-                      activeMenuItem === item.name ? styles.active : ''
+                      activeMenuItem === item.name ? styles.active : ""
                     }`}
                     onClick={() => handleMenuClick(item)}
                     type="button"
                     disabled={isLoggingOut}
                   >
-                    <span className={styles.icon}>
-                      {item.icon}
-                    </span>
+                    <span className={styles.icon}>{item.icon}</span>
                     <span className={styles.text}>{item.name}</span>
                   </button>
                 </li>
@@ -125,25 +133,26 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
         </div>
 
         {/* User Profile & Logout Section */}
-        <div className={styles.sidebarFooter}>
-          {/* User Info */}
+
+        <div  className={isOpen ? "" : "hidden md:block"}>
           <div className={styles.userInfo}>
             <div className={styles.userAvatar}>
               <User size={20} />
             </div>
             <div className={styles.userDetails}>
               <span className={styles.userName}>
-                {user?.name || user?.username || 'Super Admin'}
+                {user?.name || user?.username || "Super Admin"}
               </span>
               <span className={styles.userRole}>
-                {user?.userType || 'Administrator'}
+                {user?.userType || "Administrator"}
               </span>
             </div>
           </div>
 
-          {/* Logout Button */}
           <button
-            className={`${styles.logoutButton} ${isLoggingOut ? styles.loggingOut : ''}`}
+            className={`${styles.logoutButton} ${
+              isLoggingOut ? styles.loggingOut : ""
+            }`}
             onClick={handleLogout}
             disabled={isLoggingOut}
             type="button"
@@ -151,11 +160,9 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
           >
             <LogOut size={18} className={styles.logoutIcon} />
             <span className={styles.logoutText}>
-              {isLoggingOut ? 'Signing out...' : 'Logout'}
+              {isLoggingOut ? "Signing out..." : "Logout"}
             </span>
-            {isLoggingOut && (
-              <div className={styles.loadingSpinner}></div>
-            )}
+            {isLoggingOut && <div className={styles.loadingSpinner}></div>}
           </button>
         </div>
 
@@ -166,7 +173,7 @@ const Sidebar = ({ isOpen, onClose, activeMenuItem }) => {
           </div>
         )}
       </aside>
-    </>
+    </div>
   );
 };
 
