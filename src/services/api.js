@@ -148,6 +148,18 @@ export const companiesAPI = {
     }
   },
 
+  statusByDomain: async (domain) => {
+    try {
+      const response = await api.post(`/tenant-by-domain/${domain}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.message || 'Failed to delete company'
+      };
+    }
+  },
+
   getById: async (id) => {
     try {
       const response = await api.get(`/companies/${id}`);
