@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { Search, Grid, List, Plus, Building2, RefreshCw, Filter, X } from 'lucide-react';
-import CompanyCard from './CompanyCard';
-import CompanyList from '../Dashboard/CompanyList';
-import LoadingSpinner from '../Common/LoadingSpinner';
-import ErrorMessage from '../Common/ErrorMessage';
-import { companiesAPI } from '../../services/api';
-import styles from './CompaniesPage.module.css';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import {
+  Search,
+  Grid,
+  List,
+  Plus,
+  Building2,
+  RefreshCw,
+  Filter,
+  X,
+} from "lucide-react";
+import CompanyCard from "./CompanyCard";
+import CompanyList from "../Dashboard/CompanyList";
+import LoadingSpinner from "../Common/LoadingSpinner";
+import ErrorMessage from "../Common/ErrorMessage";
+import { companiesAPI } from "../../services/api";
+import styles from "./CompaniesPage.module.css";
 
 const CompaniesPage = ({ onCompanyDeleted }) => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [viewMode, setViewMode] = useState('list');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [sortBy, setSortBy] = useState('name');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [error, setError] = useState("");
+  const [viewMode, setViewMode] = useState("grid");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Fetch companies on component mount
@@ -26,8 +35,8 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
 
   const fetchCompanies = async () => {
     setLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       const result = await companiesAPI.getAll();
       if (result.success) {
@@ -37,109 +46,117 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
           fetchedCompanies = result.data;
         } else if (result.data?.data && Array.isArray(result.data.data)) {
           fetchedCompanies = result.data.data;
-        } else if (result.data?.companies && Array.isArray(result.data.companies)) {
+        } else if (
+          result.data?.companies &&
+          Array.isArray(result.data.companies)
+        ) {
           fetchedCompanies = result.data.companies;
         }
-        
+
         setCompanies(fetchedCompanies);
-        setError('');
+        setError("");
       } else {
-        setError(result.error || 'Failed to fetch companies');
+        setError(result.error || "Failed to fetch companies");
       }
     } catch (err) {
-      console.error('Error fetching companies:', err);
-      setError('Failed to fetch companies');
-      
+      console.error("Error fetching companies:", err);
+      setError("Failed to fetch companies");
+
       // Add mock data for development
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         setCompanies([
           {
-            id: '1',
-            tenant_id: 'acme-corp',
-            name: 'Acme Corporation',
-            email: 'contact@acme.com',
-            phone: '+1 (555) 123-4567',
-            city: 'San Francisco',
-            state: 'CA',
-            status: 'active',
+            id: "1",
+            tenant_id: "acme-corp",
+            name: "Acme Corporation",
+            email: "contact@acme.com",
+            phone: "+1 (555) 123-4567",
+            city: "San Francisco",
+            state: "CA",
+            status: "active",
             userCount: 15,
-            createdAt: '2024-01-15T10:30:00Z'
+            createdAt: "2024-01-15T10:30:00Z",
           },
           {
-            id: '2',
-            tenant_id: 'tech-solutions',
-            name: 'Tech Solutions Inc',
-            email: 'info@techsolutions.com',
-            phone: '+1 (555) 987-6543',
-            city: 'Seattle',
-            state: 'WA',
-            status: 'active',
+            id: "2",
+            tenant_id: "tech-solutions",
+            name: "Tech Solutions Inc",
+            email: "info@techsolutions.com",
+            phone: "+1 (555) 987-6543",
+            city: "Seattle",
+            state: "WA",
+            status: "active",
             userCount: 28,
-            createdAt: '2024-02-20T14:15:00Z'
-          }
+            createdAt: "2024-02-20T14:15:00Z",
+          },
         ]);
       }
     }
-    
+
     setLoading(false);
   };
 
   const handleCompanyDeleted = (companyId) => {
-    const updatedCompanies = companies.filter(company => company.id !== companyId);
+    const updatedCompanies = companies.filter(
+      (company) => company.id !== companyId
+    );
     setCompanies(updatedCompanies);
-    
-    const userData = JSON.parse(localStorage.getItem('mdb_admin_user') || '{}');
+
+    const userData = JSON.parse(localStorage.getItem("mdb_admin_user") || "{}");
     if (userData.companies) {
       userData.companies = updatedCompanies;
-      localStorage.setItem('mdb_admin_user', JSON.stringify(userData));
+      localStorage.setItem("mdb_admin_user", JSON.stringify(userData));
     }
-    
+
     if (onCompanyDeleted) {
       onCompanyDeleted(companyId);
     }
   };
-
+   console.log(companies,"companieeeees")
   const filteredAndSortedCompanies = companies
-    .filter(company => {
+    .filter((company) => {
       const searchableText = [
-        company.tenant_id || '',
-        company.name || '',
-        company.id || '',
-        company.email || '',
-        company.city || ''
-      ].join(' ').toLowerCase();
-      
-      const matchesSearch = searchTerm === '' || 
-        searchableText.includes(searchTerm.toLowerCase());
-      
-      const matchesFilter = filterStatus === 'all' || 
-        (filterStatus === 'active' && company.status === 'active') || 
-        (filterStatus === 'inactive' && company.status !== 'active');
-      
+        company.tenant_id || "",
+        company.name || "",
+        company.id || "",
+        company.email || "",
+        company.city || "",
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const matchesSearch =
+        searchTerm === "" || searchableText.includes(searchTerm.toLowerCase());
+
+      const matchesFilter =
+        filterStatus === "all" ||
+        (filterStatus === "active" && company.user_details[0]?.is_email_verified === 0) ||
+        (filterStatus === "inactive" &&  company.user_details[0]?.is_email_verified !== 0);
+
       return matchesSearch && matchesFilter;
     })
     .sort((a, b) => {
       let aValue, bValue;
-      
+
       switch (sortBy) {
-        case 'name':
-          aValue = (a.name || a.tenant_id || '').toLowerCase();
-          bValue = (b.name || b.tenant_id || '').toLowerCase();
+        case "name":
+          aValue = (a.name || a.tenant_id || "").toLowerCase();
+          bValue = (b.name || b.tenant_id || "").toLowerCase();
           break;
-        case 'id':
-          aValue = (a.id || '').toLowerCase();
-          bValue = (b.id || '').toLowerCase();
+        case "id":
+          aValue = (a.id || "").toLowerCase();
+          bValue = (b.id || "").toLowerCase();
           break;
-        case 'date':
-          aValue = new Date(a.createdAt || 0);
-          bValue = new Date(b.createdAt || 0);
+        case "date":
+          aValue = new Date(a.created_at || 0);
+          bValue = new Date(b.created_at || 0);
           break;
         default:
-          aValue = (a.name || a.tenant_id || '').toLowerCase();
-          bValue = (b.name || b.tenant_id || '').toLowerCase();
+          aValue = (a.name || a.tenant_id || "").toLowerCase();
+          bValue = (b.name || b.tenant_id || "").toLowerCase();
       }
-      
-      if (sortOrder === 'asc') {
+
+      if (sortOrder === "asc") {
         return aValue > bValue ? 1 : -1;
       } else {
         return aValue < bValue ? 1 : -1;
@@ -147,14 +164,18 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
     });
 
   const clearAllFilters = () => {
-    setSearchTerm('');
-    setFilterStatus('all');
-    setSortBy('name');
-    setSortOrder('asc');
+    setSearchTerm("");
+    setFilterStatus("all");
+    setSortBy("name");
+    setSortOrder("asc");
     setShowMobileFilters(false);
   };
 
-  const hasActiveFilters = searchTerm || filterStatus !== 'all' || sortBy !== 'name' || sortOrder !== 'asc';
+  const hasActiveFilters =
+    searchTerm ||
+    filterStatus !== "all" ||
+    sortBy !== "name" ||
+    sortOrder !== "asc";
 
   if (loading) {
     return (
@@ -205,13 +226,17 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
               disabled={loading}
               className={`${styles.button} ${styles.buttonSecondary}`}
             >
-              <RefreshCw className={`${styles.buttonIcon} ${loading ? styles.spinning : ''}`} />
+              <RefreshCw
+                className={`${styles.buttonIcon} ${
+                  loading ? styles.spinning : ""
+                }`}
+              />
               <span className={styles.buttonTextDesktop}>Refresh</span>
             </button>
-            <button className={`${styles.button} ${styles.buttonPrimary}`}>
+            {/* <button className={`${styles.button} ${styles.buttonPrimary}`}>
               <Plus className={styles.buttonIcon} />
               <span>Add Company</span>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -233,7 +258,7 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
               />
               {searchTerm && (
                 <button
-                  onClick={() => setSearchTerm('')}
+                  onClick={() => setSearchTerm("")}
                   className={styles.searchClear}
                 >
                   <X size={16} />
@@ -256,7 +281,7 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
             <select
               value={`${sortBy}-${sortOrder}`}
               onChange={(e) => {
-                const [field, order] = e.target.value.split('-');
+                const [field, order] = e.target.value.split("-");
                 setSortBy(field);
                 setSortOrder(order);
               }}
@@ -264,25 +289,29 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
             >
               <option value="name-asc">Name A-Z</option>
               <option value="name-desc">Name Z-A</option>
-              <option value="id-asc">ID A-Z</option>
-              <option value="id-desc">ID Z-A</option>
+              {/* <option value="id-asc">ID A-Z</option>
+              <option value="id-desc">ID Z-A</option> */}
               <option value="date-desc">Newest First</option>
               <option value="date-asc">Oldest First</option>
             </select>
           </div>
-          
+
           {/* View Mode Toggle */}
           <div className={styles.viewModeToggle}>
             <button
-              onClick={() => setViewMode('grid')}
-              className={`${styles.viewModeButton} ${viewMode === 'grid' ? styles.viewModeActive : ''}`}
+              onClick={() => setViewMode("grid")}
+              className={`${styles.viewModeButton} ${
+                viewMode === "grid" ? styles.viewModeActive : ""
+              }`}
             >
               <Grid className={styles.viewModeIcon} />
               <span className={styles.viewModeTextDesktop}>Grid</span>
             </button>
             <button
-              onClick={() => setViewMode('list')}
-              className={`${styles.viewModeButton} ${viewMode === 'list' ? styles.viewModeActive : ''}`}
+              onClick={() => setViewMode("list")}
+              className={`${styles.viewModeButton} ${
+                viewMode === "list" ? styles.viewModeActive : ""
+              }`}
             >
               <List className={styles.viewModeIcon} />
               <span className={styles.viewModeTextDesktop}>List</span>
@@ -303,14 +332,14 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
             />
             {searchTerm && (
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={() => setSearchTerm("")}
                 className={styles.searchClear}
               >
                 <X size={16} />
               </button>
             )}
           </div>
-          
+
           <div className={styles.mobileControls}>
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
@@ -318,19 +347,25 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
             >
               <Filter className={styles.buttonIcon} />
               <span>Filters</span>
-              {hasActiveFilters && <span className={styles.filtersBadge}></span>}
+              {hasActiveFilters && (
+                <span className={styles.filtersBadge}></span>
+              )}
             </button>
-            
+
             <div className={styles.viewModeToggle}>
               <button
-                onClick={() => setViewMode('grid')}
-                className={`${styles.viewModeButton} ${viewMode === 'grid' ? styles.viewModeActive : ''}`}
+                onClick={() => setViewMode("grid")}
+                className={`${styles.viewModeButton} ${
+                  viewMode === "grid" ? styles.viewModeActive : ""
+                }`}
               >
                 <Grid className={styles.viewModeIcon} />
               </button>
               <button
-                onClick={() => setViewMode('list')}
-                className={`${styles.viewModeButton} ${viewMode === 'list' ? styles.viewModeActive : ''}`}
+                onClick={() => setViewMode("list")}
+                className={`${styles.viewModeButton} ${
+                  viewMode === "list" ? styles.viewModeActive : ""
+                }`}
               >
                 <List className={styles.viewModeIcon} />
               </button>
@@ -355,7 +390,7 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
               <select
                 value={`${sortBy}-${sortOrder}`}
                 onChange={(e) => {
-                  const [field, order] = e.target.value.split('-');
+                  const [field, order] = e.target.value.split("-");
                   setSortBy(field);
                   setSortOrder(order);
                 }}
@@ -365,8 +400,8 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
                 <option value="name-desc">Name Z-A</option>
                 <option value="id-asc">ID A-Z</option>
                 <option value="id-desc">ID Z-A</option>
-                <option value="date-desc">Newest First</option>
-                <option value="date-asc">Oldest First</option>
+                <option value="date-asc">Newest First</option>
+                <option value="date-desc">Oldest First</option>
               </select>
 
               {hasActiveFilters && (
@@ -386,24 +421,12 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
           <div className={styles.activeFilters}>
             <div className={styles.activeFiltersContent}>
               <span className={styles.activeFiltersLabel}>Active filters:</span>
-              
+
               {searchTerm && (
                 <span className={styles.filterChip}>
                   Search: "{searchTerm}"
                   <button
-                    onClick={() => setSearchTerm('')}
-                    className={styles.filterChipRemove}
-                  >
-                    ×
-                  </button>
-                </span>
-              )}
-              
-              {filterStatus !== 'all' && (
-                <span className={styles.filterChip}>
-                  Status: {filterStatus}
-                  <button
-                    onClick={() => setFilterStatus('all')}
+                    onClick={() => setSearchTerm("")}
                     className={styles.filterChipRemove}
                   >
                     ×
@@ -411,13 +434,25 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
                 </span>
               )}
 
-              {(sortBy !== 'name' || sortOrder !== 'asc') && (
+              {filterStatus !== "all" && (
                 <span className={styles.filterChip}>
-                  Sort: {sortBy} {sortOrder === 'asc' ? '↑' : '↓'}
+                  Status: {filterStatus}
+                  <button
+                    onClick={() => setFilterStatus("all")}
+                    className={styles.filterChipRemove}
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+
+              {(sortBy !== "name" || sortOrder !== "asc") && (
+                <span className={styles.filterChip}>
+                  Sort: {sortBy} {sortOrder === "asc" ? "↑" : "↓"}
                   <button
                     onClick={() => {
-                      setSortBy('name');
-                      setSortOrder('asc');
+                      setSortBy("name");
+                      setSortOrder("asc");
                     }}
                     className={styles.filterChipRemove}
                   >
@@ -425,11 +460,8 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
                   </button>
                 </span>
               )}
-              
-              <button
-                onClick={clearAllFilters}
-                className={styles.clearAllLink}
-              >
+
+              <button onClick={clearAllFilters} className={styles.clearAllLink}>
                 Clear all
               </button>
             </div>
@@ -441,10 +473,14 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
       {companies.length > 0 && (
         <div className={styles.resultsSummary}>
           <span className={styles.resultsText}>
-            Showing {filteredAndSortedCompanies.length} of {companies.length} companies
+            Showing {filteredAndSortedCompanies.length} of {companies.length}{" "}
+            companies
           </span>
           <span className={styles.viewModeText}>
-            View: <span className={styles.viewModeLabel}>{viewMode === 'grid' ? 'Grid' : 'List'}</span>
+            View:{" "}
+            <span className={styles.viewModeLabel}>
+              {viewMode === "grid" ? "Grid" : "List"}
+            </span>
           </span>
         </div>
       )}
@@ -452,19 +488,16 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
       {/* Companies Display */}
       {filteredAndSortedCompanies.length > 0 ? (
         <div className={styles.companiesContent}>
-          {viewMode === 'grid' ? (
-            <div className={styles.companiesGrid}>
-              {filteredAndSortedCompanies.map((company) => (
-                <CompanyCard 
-                  key={company.id} 
-                  company={company} 
-                  onCompanyDeleted={handleCompanyDeleted}
-                />
-              ))}
+          {viewMode === "grid" ? (
+            <div >
+              <CompanyCard
+              companies={filteredAndSortedCompanies} 
+              onCompanyDeleted={handleCompanyDeleted}
+              />
             </div>
           ) : (
-            <CompanyList 
-              companies={filteredAndSortedCompanies} 
+            <CompanyList
+              companies={filteredAndSortedCompanies}
               onCompanyDeleted={handleCompanyDeleted}
             />
           )}
@@ -472,12 +505,13 @@ const CompaniesPage = ({ onCompanyDeleted }) => {
       ) : (
         <div className={styles.emptyState}>
           <div className={styles.emptyStateContent}>
-            {searchTerm || filterStatus !== 'all' ? (
+            {searchTerm || filterStatus !== "all" ? (
               <>
                 <Search className={styles.emptyStateIcon} />
                 <h3 className={styles.emptyStateTitle}>No companies found</h3>
                 <p className={styles.emptyStateText}>
-                  No companies match your current filters. Try adjusting your search or filters.
+                  No companies match your current filters. Try adjusting your
+                  search or filters.
                 </p>
                 <button
                   onClick={clearAllFilters}

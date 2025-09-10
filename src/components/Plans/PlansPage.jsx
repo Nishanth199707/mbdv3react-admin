@@ -22,7 +22,7 @@ import styles from "./PlansPage.module.css";
 
 const PlanCard = ({ plan, onEdit, onToggleStatus, onView }) => {
   const isActive = plan.is_active;
-
+console.log(plan,"plan")
   return (
     <div
       className={`${styles.planCard} ${

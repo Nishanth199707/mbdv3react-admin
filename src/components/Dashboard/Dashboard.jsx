@@ -199,7 +199,7 @@ const Dashboard = () => {
 
       {/* Stats Grid */}
           {/* Quick Actions */}
-      <div className={styles.quickActionsSection}>
+      {/* <div className={styles.quickActionsSection}>
         <div className={styles.sectionHeader}>
           <h3 className={styles.sectionTitle}>Quick Actions</h3>
           <p className={styles.sectionSubtitle}>Frequently used features</p>
@@ -221,10 +221,10 @@ const Dashboard = () => {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.statsSection}>
-        <h3 className={styles.sectionTitle}>Key Metrics</h3>
+        {/* <h3 className={styles.sectionTitle}>Key Metrics</h3> */}
         <div className={styles.statsGrid}>
           {stats.map((stat, index) => (
             <StatsCard key={index} {...stat} />
